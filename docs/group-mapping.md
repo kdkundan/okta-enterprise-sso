@@ -10,23 +10,23 @@ Defined in `backend/src/auth/groupMapper.js`:
 
 | Okta Group | Application Role | Permissions |
 |---|---|---|
-| `elog_admin` | `admin` | Full access — all features, user management |
-| `elog_shift_manager` | `shift_manager` | Manage shift logs, view reports |
-| `elog_supervisor` | `supervisor` | Approve entries, view team data |
-| `elog_operator` | `operator` | Create and edit own log entries |
+| `sso_admin` | `admin` | Full access — all features, user management |
+| `sso_shift_manager` | `shift_manager` | Manage shift logs, view reports |
+| `sso_supervisor` | `supervisor` | Approve entries, view team data |
+| `sso_operator` | `operator` | Create and edit own log entries |
 
 ---
 
 ## Role Priority
 
-When a user belongs to multiple `elog_*` groups (e.g. `elog_admin` and `elog_operator`), the highest-privilege role wins:
+When a user belongs to multiple `sso_*` groups (e.g. `sso_admin` and `sso_operator`), the highest-privilege role wins:
 
 ```
 Priority (highest → lowest):
-  1. elog_admin
-  2. elog_shift_manager
-  3. elog_supervisor
-  4. elog_operator
+  1. sso_admin
+  2. sso_shift_manager
+  3. sso_supervisor
+  4. sso_operator
 ```
 
 This is controlled by `ROLE_PRIORITY` array in `groupMapper.js`. Adjust order to match your privilege model.
@@ -56,15 +56,15 @@ When `roleOverride` is set, it takes precedence over the SAML group-derived role
 
 | Scenario | Outcome |
 |---|---|
-| User in app, no `elog_*` group | Redirected to `/access-denied?reason=no_valid_group` |
-| User in `elog_*` group but not assigned to Okta app | Okta blocks login before SAML assertion is sent |
+| User in app, no `sso_*` group | Redirected to `/access-denied?reason=no_valid_group` |
+| User in `sso_*` group but not assigned to Okta app | Okta blocks login before SAML assertion is sent |
 | Authenticated but accessing wrong-role route | Redirected to `/access-denied?reason=insufficient_role` |
 
 ---
 
 ## Adding a New Role
 
-1. Create the Okta group: `elog_<new_role>`
+1. Create the Okta group: `sso_<new_role>`
 2. Add entry to `GROUP_ROLE_MAP` in `groupMapper.js`
 3. Add to `ROLE_PRIORITY` at the appropriate position
 4. Add `badge-<new_role>` CSS class in `frontend/src/index.css`

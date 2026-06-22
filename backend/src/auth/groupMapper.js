@@ -2,7 +2,7 @@
  * Group-to-Role mapping.
  *
  * Rules:
- *  - Groups are sourced from the "groups" SAML attribute (filtered in Okta to start with "elog_")
+ *  - Groups are sourced from the "groups" SAML attribute (filtered in Okta to start with "sso_")
  *  - First matching group in the map determines the user's role (order matters)
  *  - If no valid group is found, login is denied and the user is redirected to /access-denied
  *
@@ -10,18 +10,14 @@
  */
 
 export const GROUP_ROLE_MAP = {
-  elog_admin:         'admin',
-  elog_shift_manager: 'shift_manager',
-  elog_operator:      'operator',
-  elog_supervisor:    'supervisor',
+  sso_admin:    'admin',
+  sso_operator: 'operator',
 };
 
 // Priority order — evaluated top-to-bottom; first match wins
 const ROLE_PRIORITY = [
-  'elog_admin',
-  'elog_shift_manager',
-  'elog_supervisor',
-  'elog_operator',
+  'sso_admin',
+  'sso_operator',
 ];
 
 /**

@@ -62,10 +62,10 @@ See `diagrams/` for full Mermaid diagrams and AI image generation prompts.
 ## Authentication Flow
 
 1. User clicks **Sign in with Okta** on the React login page
-2. React redirects to `GET /auth/saml/login` on the backend
+2. React redirects to `GET /api/v1/auth/saml/login` on the backend
 3. Backend generates a SAML `AuthnRequest` and redirects to Okta
 4. User authenticates at Okta (password + MFA)
-5. Okta signs the SAML assertion and POSTs it to `POST /auth/saml/callback` (ACS)
+5. Okta signs the SAML assertion and POSTs it to `POST /api/v1/auth/saml/acs` (ACS)
 6. `passport-saml` validates the signature, expiry, and audience
 7. `normalizeUser()` extracts `email`, `firstName`, `lastName`, `username`, `groups`
 8. `resolveRole()` maps Okta groups → application role (deny if no valid group)
@@ -180,7 +180,7 @@ cp .env.example .env
 ```bash
 cd frontend
 cp .env.example .env
-# VITE_API_URL=http://localhost:4000 (default)
+# VITE_API_URL=http://localhost:9000/api/v1
 ```
 
 ### 4. Configure Okta
@@ -207,7 +207,7 @@ Open `http://localhost:5173`
 
 | Variable | Description |
 |---|---|
-| `PORT` | Server port (default: 4000) |
+| `PORT` | Server port (default: 9000) |
 | `MONGODB_URI` | MongoDB connection string |
 | `SESSION_SECRET` | express-session secret (random, 64+ chars) |
 | `JWT_SECRET` | JWT signing secret (random, 64+ chars) |
@@ -228,16 +228,9 @@ Open `http://localhost:5173`
 
 ---
 
-## Group-to-Role Mapping
+## Group-Based RBAC
 
-| Okta Group | Role | Access Level |
-|---|---|---|
-| `elog_admin` | `admin` | Full access |
-| `elog_shift_manager` | `shift_manager` | Shift management |
-| `elog_supervisor` | `supervisor` | Approval + team view |
-| `elog_operator` | `operator` | Own entries only |
-
-Users with no `elog_*` group are denied login and redirected to `/access-denied`.
+Okta groups map to application roles at login. Full setup instructions — including how to create groups, configure the group attribute statement, and assign users — are in [`docs/okta-rbac-setup.md`](docs/okta-rbac-setup.md).
 
 ---
 
@@ -269,6 +262,7 @@ See `docs/troubleshooting.md` for 8 detailed enterprise scenarios covering:
 | Document | Description |
 |---|---|
 | `docs/okta-app-setup.md` | Step-by-step Okta SAML app creation |
+| `docs/okta-rbac-setup.md` | Groups, SAML attributes, and role mapping setup |
 | `docs/attribute-statements.md` | SAML attribute mapping reference |
 | `docs/group-mapping.md` | Group-to-role mapping and access control |
 | `docs/troubleshooting.md` | 8 real-world enterprise issue scenarios |

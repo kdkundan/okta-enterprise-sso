@@ -29,11 +29,11 @@ Configure in Okta: **App → General → SAML Settings → Group Attribute State
 
 | Attribute Name | Name Format | Filter Type | Filter Value |
 |---|---|---|---|
-| `groups` | Unspecified | Starts with | `elog_` |
+| `groups` | Unspecified | Starts with | `sso_` |
 
 ### Why the Filter Matters
 
-Okta users typically belong to dozens of groups (e.g. `Everyone`, department groups, other app groups). The `Starts with: elog_` filter ensures:
+Okta users typically belong to dozens of groups (e.g. `Everyone`, department groups, other app groups). The `Starts with: sso_` filter ensures:
 
 1. Only application-relevant groups appear in the SAML assertion
 2. The assertion size stays small (faster, more reliable)
@@ -42,10 +42,8 @@ Okta users typically belong to dozens of groups (e.g. `Everyone`, department gro
 ### Expected Values
 
 ```
-elog_admin
-elog_shift_manager
-elog_supervisor
-elog_operator
+sso_admin
+sso_operator
 ```
 
 ---

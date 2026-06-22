@@ -10,7 +10,7 @@ const REASON_DETAIL = {
   no_valid_group: {
     title: 'No Application Group Assigned',
     message:
-      'You successfully authenticated with Okta, but your account is not assigned to any valid application group (e.g. elog_admin, elog_operator). Please contact your system administrator to request access.',
+      'You successfully authenticated with Okta, but your account is not assigned to any valid application group. Please contact your system administrator to request access.',
   },
   saml_error: {
     title: 'SAML Authentication Error',

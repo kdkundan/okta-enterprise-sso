@@ -76,7 +76,7 @@ This is more secure than storing the JWT in `localStorage` (XSS-readable) or `se
 
 ## Least Privilege Principle
 
-- Okta Group Attribute Statement uses `Starts with: elog_` filter — only app-relevant groups are shared
+- Okta Group Attribute Statement uses `Starts with: sso_` filter — only app-relevant groups are shared
 - MongoDB users and the application DB user should have minimal permissions
 - The backend service account should not have write access to the `auditlogs` collection beyond inserts
 - In production, use a read-only DB user for health check queries

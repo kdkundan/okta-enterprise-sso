@@ -8,11 +8,11 @@ Real-world enterprise SAML SSO issues, root causes, and resolutions.
 
 **Symptom**: User successfully logs in to Okta but is redirected to `/access-denied?reason=no_valid_group`.
 
-**Root Cause**: The user's Okta account is assigned to the application but does not belong to any `elog_*` group, or the Group Attribute Statement filter is misconfigured.
+**Root Cause**: The user's Okta account is assigned to the application but does not belong to any `sso_*` group, or the Group Attribute Statement filter is misconfigured.
 
 **Resolution**:
-1. In Okta Admin → Directory → Groups, verify the user is a member of at least one `elog_*` group
-2. Verify the Okta app's Group Attribute Statement has filter: **Starts with** = `elog_`
+1. In Okta Admin → Directory → Groups, verify the user is a member of at least one `sso_*` group
+2. Verify the Okta app's Group Attribute Statement has filter: **Starts with** = `sso_`
 3. Check the audit log: `db.auditlogs.find({ event: 'LOGIN_DENIED', email: 'user@example.com' })`
 4. Add the user to the appropriate group and test again
 
@@ -22,12 +22,12 @@ Real-world enterprise SAML SSO issues, root causes, and resolutions.
 
 **Symptom**: User is in an Okta group but the group name doesn't match any entry in `GROUP_ROLE_MAP`.
 
-**Root Cause**: Okta group name does not match the expected naming convention (e.g. `ELog_Admin` vs `elog_admin`).
+**Root Cause**: Okta group name does not match the expected naming convention (e.g. `App_Admin` vs `sso_admin`).
 
 **Resolution**:
 1. Check the raw SAML assertion — use a browser SAML debugger extension (e.g. SAML-tracer for Firefox)
 2. Look for the `groups` attribute value in the assertion
-3. Either rename the Okta group to match `elog_*` convention OR add the group name variant to `GROUP_ROLE_MAP`
+3. Either rename the Okta group to match `sso_*` convention OR add the group name variant to `GROUP_ROLE_MAP`
 
 ---
 

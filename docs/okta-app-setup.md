@@ -28,8 +28,8 @@ Complete step-by-step instructions for configuring an Okta SAML 2.0 application 
 
 | Field | Value |
 |---|---|
-| **Single sign-on URL (ACS URL)** | `http://localhost:4000/auth/saml/callback` |
-| **Audience URI (SP Entity ID)** | `http://localhost:4000/auth/saml/metadata` |
+| **Single sign-on URL (ACS URL)** | `http://localhost:9000/api/v1/auth/saml/acs` |
+| **Audience URI (SP Entity ID)** | `urn:enterprise:sso:local` |
 | **Name ID format** | `EmailAddress` |
 | **Application username** | `Email` |
 | **Response** | Signed |
@@ -37,7 +37,7 @@ Complete step-by-step instructions for configuring an Okta SAML 2.0 application 
 | **Signature Algorithm** | RSA-SHA256 |
 | **Digest Algorithm** | SHA256 |
 
-> **Production**: Replace `localhost:4000` with your actual domain (e.g. `https://api.yourcompany.com`)
+> **Production**: Replace `localhost:9000` with your actual domain (e.g. `https://api.yourcompany.com`)
 
 ---
 
@@ -60,7 +60,7 @@ Add one Group Attribute Statement:
 
 | Name | Name Format | Filter | Value |
 |---|---|---|---|
-| `groups` | Unspecified | Starts with | `elog_` |
+| `groups` | Unspecified | Starts with | `sso_` |
 
 This ensures only application-relevant groups are included in the SAML assertion.
 
@@ -80,10 +80,10 @@ After saving, go to **Sign On** tab → **View Setup Instructions**. Copy:
 
 1. Go to **Assignments** tab
 2. Click **Assign → Assign to Groups**
-3. Assign the relevant `elog_*` groups (e.g. `elog_admin`, `elog_operator`)
+3. Assign the relevant `sso_*` groups (e.g. `sso_admin`, `sso_operator`)
 4. Users in these groups will receive the correct role upon login
 
-> Users assigned to the app but with no `elog_*` group will be denied at the ACS step.
+> Users assigned to the app but with no `sso_*` group will be denied at the ACS step.
 
 ---
 

@@ -23,8 +23,8 @@ Review every item before deploying to production.
 - [ ] Okta app ACS URL updated to production URL
 - [ ] Okta app SP Entity ID updated to production value
 - [ ] Okta SAML certificate matches `SAML_CERT` in production `.env`
-- [ ] Group Attribute Statement filter is correctly set (`Starts with: elog_`)
-- [ ] All production users are assigned to the Okta app and relevant `elog_*` groups
+- [ ] Group Attribute Statement filter is correctly set (`Starts with: sso_`)
+- [ ] All production users are assigned to the Okta app and relevant `sso_*` groups
 - [ ] Okta MFA is enabled for all users (recommended)
 
 ---
@@ -63,7 +63,7 @@ Review every item before deploying to production.
 ## Testing
 
 - [ ] Full SAML flow tested end-to-end in a staging environment with production Okta app
-- [ ] Access denied flow tested with a user who has no `elog_*` group
+- [ ] Access denied flow tested with a user who has no `sso_*` group
 - [ ] Logout flow tested — cookie is cleared and session is revoked in DB
 - [ ] Session expiration tested — user is redirected to login after JWT expires
 - [ ] Certificate rotation procedure documented and tested
