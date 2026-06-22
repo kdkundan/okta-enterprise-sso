@@ -1,0 +1,34 @@
+{
+  "name": "okta-saml-enterprise-backend",
+  "version": "1.0.0",
+  "description": "Enterprise Okta SAML SSO backend — Node.js + Express + passport-saml + MongoDB",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint src/"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-session": "^1.17.3",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-saml": "^3.2.4",
+    "undici": "^6.0.0",
+    "uuid": "^9.0.1",
+    "xml2js": "^0.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "type": "module"
+}
